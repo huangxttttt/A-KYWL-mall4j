@@ -19,6 +19,12 @@ spring:
       port: 6379
       database: 0
       password: easymer@redis@2023
+  minio:
+    url: ${MINIO_HOST:http://192.168.174.129:19000}
+    bucket: ${MINIO_PORT:mall4j}
+    access-key: ${MINIO_NAME:minio}
+    secret-key: ${MINIO_PASSWORD:easymer@minio@2023}
+    url-prefix: http://192.168.174.129:19000/mall4j/
 logging:
   config: classpath:logback/logback-dev.xml
 xxl-job:

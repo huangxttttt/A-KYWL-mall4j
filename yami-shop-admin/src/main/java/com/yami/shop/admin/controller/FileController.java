@@ -14,6 +14,7 @@ import com.yami.shop.bean.enums.UploadType;
 import com.yami.shop.common.bean.Qiniu;
 import com.yami.shop.common.response.ServerResponseEntity;
 import com.yami.shop.common.util.ImgUploadUtil;
+import com.yami.shop.common.util.MinioHelper;
 import com.yami.shop.service.AttachFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,39 +28,44 @@ import java.util.Objects;
 
 /**
  * 文件上传 controller
- * @author lgh
  *
+ * @author lgh
  */
 @RestController
 @RequestMapping("/admin/file")
 public class FileController {
 
-	@Autowired
-	private AttachFileService attachFileService;
-	@Autowired
-	private Qiniu qiniu;
-	@Autowired
-	private ImgUploadUtil imgUploadUtil;
+    @Autowired
+    private AttachFileService attachFileService;
+    @Autowired
+    private Qiniu qiniu;
+    @Autowired
+    private ImgUploadUtil imgUploadUtil;
+    @Autowired
+    private MinioHelper minioHelper;
 
-	@PostMapping("/upload/element")
-	public ServerResponseEntity<String> uploadElementFile(@RequestParam("file") MultipartFile file) throws IOException{
-		if(file.isEmpty()){
+    @PostMapping("/upload/element")
+    public ServerResponseEntity<String> uploadElementFile(@RequestParam("file") MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
             return ServerResponseEntity.success();
         }
-		String fileName = attachFileService.uploadFile(file);
+        String fileName = attachFileService.uploadFile(file);
+        fileName = minioHelper.getUrlPrefix() + fileName;
         return ServerResponseEntity.success(fileName);
-	}
+    }
 
-	@PostMapping("/upload/tinymceEditor")
-	public ServerResponseEntity<String> uploadTinymceEditorImages(@RequestParam("editorFile") MultipartFile editorFile) throws IOException{
-		String fileName =  attachFileService.uploadFile(editorFile);
-		String data = "";
-		if (Objects.equals(imgUploadUtil.getUploadType(), UploadType.LOCAL.value())) {
-			data = imgUploadUtil.getUploadPath() + fileName;
-		} else if (Objects.equals(imgUploadUtil.getUploadType(), UploadType.QINIU.value())) {
-			data = qiniu.getResourcesUrl() + fileName;
-		}
+    @PostMapping("/upload/tinymceEditor")
+    public ServerResponseEntity<String> uploadTinymceEditorImages(@RequestParam("editorFile") MultipartFile editorFile) throws IOException {
+        String fileName = attachFileService.uploadFile(editorFile);
+        String data = "";
+        if (Objects.equals(imgUploadUtil.getUploadType(), UploadType.LOCAL.value())) {
+            data = imgUploadUtil.getUploadPath() + fileName;
+        } else if (Objects.equals(imgUploadUtil.getUploadType(), UploadType.QINIU.value())) {
+            data = qiniu.getResourcesUrl() + fileName;
+        } else if (Objects.equals(imgUploadUtil.getUploadType(), UploadType.MINIO.value())) {
+            data = minioHelper.getUrlPrefix() + fileName;
+        }
         return ServerResponseEntity.success(data);
-	}
+    }
 
 }

@@ -24,7 +24,12 @@ public enum UploadType {
     /**
      * 七牛云
      */
-    QINIU(2);
+    QINIU(2),
+
+    /**
+     * minio
+     */
+    MINIO(3);
 
     private Integer num;
 

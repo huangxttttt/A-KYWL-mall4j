@@ -15,7 +15,10 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.yami.shop.common.bean.Qiniu;
+import com.yami.shop.common.config.MinioConfig;
 import com.yami.shop.common.util.ImgUploadUtil;
+import com.yami.shop.common.util.MinioHelper;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +37,10 @@ public class ImgJsonSerializer extends JsonSerializer<String> {
     private Qiniu qiniu;
     @Autowired
     private ImgUploadUtil imgUploadUtil;
+    @Autowired
+    private MinioHelper minioHelper;
+    @Resource
+    private MinioConfig.MinioProperties minioProperties;
 
     @Override
     public void serialize(String value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
@@ -44,23 +51,25 @@ public class ImgJsonSerializer extends JsonSerializer<String> {
         String[] imgs = value.split(StrUtil.COMMA);
         StringBuilder sb = new StringBuilder();
         String resourceUrl = "";
-        String rule="^((http[s]{0,1})://)";
-        Pattern pattern= Pattern.compile(rule);
+        String rule = "^((http[s]{0,1})://)";
+        Pattern pattern = Pattern.compile(rule);
         if (Objects.equals(imgUploadUtil.getUploadType(), 2)) {
             resourceUrl = qiniu.getResourcesUrl();
         } else if (Objects.equals(imgUploadUtil.getUploadType(), 1)) {
             resourceUrl = imgUploadUtil.getResourceUrl();
+        } else if (Objects.equals(imgUploadUtil.getUploadType(), 3)) {
+            resourceUrl = minioHelper.getUrlPrefix();
         }
         for (String img : imgs) {
             Matcher matcher = pattern.matcher(img);
             //若图片以http或https开头，直接返回
-            if (matcher.find()){
+            if (matcher.find()) {
                 sb.append(img).append(StrUtil.COMMA);
-            }else {
+            } else {
                 sb.append(resourceUrl).append(img).append(StrUtil.COMMA);
             }
         }
-        sb.deleteCharAt(sb.length()-1);
+        sb.deleteCharAt(sb.length() - 1);
         gen.writeString(sb.toString());
     }
 }
