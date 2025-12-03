@@ -13,6 +13,12 @@ spring:
       idle-timeout: 25000
       auto-commit: true
       connection-test-query: SELECT 1
+  minio:
+    url: ${MINIO_HOST:http://192.168.174.129:19000}
+    bucket: mall4j
+    access-key: ${MINIO_NAME:minio}
+    secret-key: ${MINIO_PASSWORD:easymer@minio@2023}
+    url-prefix: http://192.168.174.129:19000/mall4j/
   data:
     redis:
       host: ${REDIS_HOST:mall4j-redis}

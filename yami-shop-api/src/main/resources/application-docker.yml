@@ -20,7 +20,7 @@ spring:
       password: ${REDIS_PASSWORD:easymer@redis@2023}
   minio:
     url:  ${MINIO_HOST:galaxy-minio}
-    bucket: ${MINIO_PORT:mall4j}
+    bucket: mall4j
     access-key: ${MINIO_NAME:minio}
     secret-key: ${MINIO_PASSWORD:easymer@minio@2023}
 
