@@ -23,6 +23,7 @@ spring:
     bucket: mall4j
     access-key: ${MINIO_NAME:minio}
     secret-key: ${MINIO_PASSWORD:easymer@minio@2023}
+    url-prefix: http://192.168.174.129:19000/mall4j/
 
 logging:
   config: classpath:logback/logback-prod.xml
