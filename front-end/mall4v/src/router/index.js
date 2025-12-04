@@ -33,7 +33,7 @@ export const mainRoutes = {
       component: () => import('@/views/common/home/index.vue')
     },
     {
-      path: '/prodInfo',
+      path: 'prodInfo',
       name: 'prodInfo',
       component: () => import('@/views/modules/prod/prodInfo/index.vue')
     }
@@ -43,14 +43,14 @@ export const mainRoutes = {
     const authorization = cookie.get('Authorization')
     if (!authorization || !/\S/.test(authorization)) {
       clearLoginInfo()
-      next({ name: 'login' })
+     return  next({ name: 'login' })
     }
     next()
   }
 }
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/admin'),
   scrollBehavior: () => ({ top: 0 }),
   isAddDynamicMenuRoutes: false, // 是否已经添加动态(菜单)路由
   routes: globalRoutes.concat(mainRoutes)
