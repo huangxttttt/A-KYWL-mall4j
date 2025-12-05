@@ -43,7 +43,7 @@ export const mainRoutes = {
     const authorization = cookie.get('Authorization')
     if (!authorization || !/\S/.test(authorization)) {
       clearLoginInfo()
-     return  next({ name: 'login' })
+      next({ name: 'login' })
     }
     next()
   }

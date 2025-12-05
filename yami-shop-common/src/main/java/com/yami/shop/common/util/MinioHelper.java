@@ -154,7 +154,7 @@ public class MinioHelper {
      */
     public void upload(InputStream inputStream, String objectPath, String contentType)
             throws Exception {
-
+        createBucketIfNotExists();
         String bucket = minioProperties.getBucket();
         String objectName = normalizePath(objectPath);
 
