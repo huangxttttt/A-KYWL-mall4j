@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory,createWebHashHistory  } from 'vue-router'
 import cookie from 'vue-cookies'
 import { isURL } from '@/utils/validate'
 import { clearLoginInfo } from '@/utils'
@@ -50,7 +50,7 @@ export const mainRoutes = {
 }
 
 const router = createRouter({
-  history: createWebHistory('/admin'),
+  history: createWebHashHistory('/admin'),
   scrollBehavior: () => ({ top: 0 }),
   isAddDynamicMenuRoutes: false, // 是否已经添加动态(菜单)路由
   routes: globalRoutes.concat(mainRoutes)
