@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory,createWebHashHistory  } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import cookie from 'vue-cookies'
 import { isURL } from '@/utils/validate'
 import { clearLoginInfo } from '@/utils'
