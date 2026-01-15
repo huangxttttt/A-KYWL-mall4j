@@ -299,6 +299,33 @@
         </view>
       </block>
     </view>
+
+    <!-- 页面最底部备案信息 -->
+    <view class="icp-wrapper">
+      <view class="icp-item">
+        <image
+          src="@/static/images/icon/icp.png"
+          class="icp-icon"
+        />
+        <a
+          href="https://beian.mps.gov.cn/#/query/webSearch?code=35060302000299"
+          target="_blank"
+          rel="noreferrer"
+        >
+          闽公网安备35060302000299号
+        </a>
+      </view>
+
+      <view class="icp-item">
+        <a
+          href="https://beian.miit.gov.cn/"
+          target="_blank"
+        >
+          闽ICP备2025122944号-1
+        </a>
+      </view>
+    </view>
+
   </view>
 </template>
 

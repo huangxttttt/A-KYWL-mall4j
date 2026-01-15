@@ -411,3 +411,30 @@ swiper-item {
     padding: 8rpx;
   }
 }
+
+/* 页面最底部备案 */
+.icp-wrapper {
+  padding: 40rpx 20rpx 60rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+  background-color: #f7f7f7;
+}
+
+.icp-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12rpx;
+
+  a {
+    color: #999;
+    text-decoration: none;
+  }
+}
+
+.icp-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+}
